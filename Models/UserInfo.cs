@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Todolistapplication.Models
 {
-    public class user_info
+    public class UserInfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -11,16 +11,18 @@ namespace Todolistapplication.Models
 
         [StringLength(250)]
         [Required]
+        [EmailAddress]
         public string? Email { get; set; }
 
         [StringLength(50)]
         [Required]
+        [MinLength(6)]
         public string? Password { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-
-    
-
-
+        
+        // I think this would also work. Either add this or like you did in TodoItem class
+        // both ways should work
+        // public ICollection<TodoItem>? TodoItems { get; set; }
     }
 }

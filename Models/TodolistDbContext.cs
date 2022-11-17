@@ -16,7 +16,7 @@ namespace Todolistapplication.Models
             modelBuilder.UseSerialColumns();
 
         }
-        public DbSet<user_info>? user_infos { get; set; }
+        public DbSet<UserInfo>? userInfos { get; set; }
         public DbSet<TodoItem>? TodoItems { get; set; }
 
 
