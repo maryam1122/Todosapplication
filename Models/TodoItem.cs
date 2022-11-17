@@ -19,6 +19,7 @@ namespace Todolistapplication.Models
         public DateTime ItemCreated { get; set; }
         public DateTime ItemUpdated { get; set; }
 
-        // public user_info user { get; set; } I think this is not needed here
+        // Either declare this here or see TodoItem class. Both ways should work
+        public UserInfo userInfo { get; set; }
     }
 }
