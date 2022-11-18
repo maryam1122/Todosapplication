@@ -3,13 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Todolistapplication.Interface;
 using Todolistapplication.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-
-
-
-
 
 namespace Todolistapplication.Controllers
 {
@@ -60,8 +53,5 @@ namespace Todolistapplication.Controllers
             var todoItem = _ITodolist.DeleteTodoItem(id);
             return await Task.FromResult(todoItem);
         }
-
-       
-
     }
 }

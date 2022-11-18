@@ -2,16 +2,11 @@
 using Todolistapplication.Models;
 using Microsoft.EntityFrameworkCore;
 
-
-
 namespace Todolistapplication.Repository
 {
-
     public class TodoItemRepository : ITodolist
     {
-
         readonly TodolistDbContext _dbContext = new();
-
         public TodoItemRepository(TodolistDbContext dbContext)
         { _dbContext = dbContext; }
 
@@ -24,7 +19,7 @@ namespace Todolistapplication.Repository
             catch
             {
                 throw;
-                
+
             }
         }
         public TodoItem GetTodoItemDetails(int id)
@@ -71,19 +66,20 @@ namespace Todolistapplication.Repository
                 throw;
             }
         }
-       public TodoItem DeleteTodoItem(int Id)
+        public TodoItem DeleteTodoItem(int Id)
         {
             try
             {
                 TodoItem? todoItem = _dbContext.TodoItems.Find(Id);
-                if(todoItem != null)
+                if (todoItem != null)
                 {
                     _dbContext.TodoItems.Remove(todoItem);
                     _dbContext.SaveChanges();
                     return todoItem;
                 }
-                else 
-                { throw new ArgumentNullException();
+                else
+                {
+                    throw new ArgumentNullException();
                 }
             }
             catch

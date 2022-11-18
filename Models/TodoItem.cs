@@ -14,18 +14,12 @@ namespace Todolistapplication.Models
 
         [StringLength(250)]
         [Required]
-        public string item_Name { get; set; }
-        public string item_Description { get; set; }
-        public DateTime item_created { get; set; }
-        public DateTime item_updated { get; set; }
+        public string ItemName { get; set; }
+        public string ItemDescription { get; set; }
+        public DateTime ItemCreated { get; set; }
+        public DateTime ItemUpdated { get; set; }
 
-        public user_info user { get; set; }
-
-       
-
-
-
-
-
+        // Either declare this here or see TodoItem class. Both ways should work
+        public UserInfo userInfo { get; set; }
     }
 }
