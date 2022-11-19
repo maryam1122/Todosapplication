@@ -13,7 +13,7 @@ namespace Todolistapplication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "user_infos",
+                name: "userInfos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -25,7 +25,7 @@ namespace Todolistapplication.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_infos", x => x.Id);
+                    table.PrimaryKey("PK_userInfos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,27 +34,28 @@ namespace Todolistapplication.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    itemName = table.Column<string>(name: "item_Name", type: "character varying(250)", maxLength: 250, nullable: false),
-                    itemDescription = table.Column<string>(name: "item_Description", type: "text", nullable: false),
-                    itemcreated = table.Column<DateTime>(name: "item_created", type: "timestamp with time zone", nullable: false),
-                    itemupdated = table.Column<DateTime>(name: "item_updated", type: "timestamp with time zone", nullable: false),
-                    userinfoId = table.Column<int>(name: "user_infoId", type: "integer", nullable: false)
+                    ItemName = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    ItemDescription = table.Column<string>(type: "text", nullable: false),
+                    ItemCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ItemUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    userInfoId = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TodoItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TodoItems_user_infos_user_infoId",
-                        column: x => x.userinfoId,
-                        principalTable: "user_infos",
+                        name: "FK_TodoItems_userInfos_userInfoId",
+                        column: x => x.userInfoId,
+                        principalTable: "userInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TodoItems_user_infoId",
+                name: "IX_TodoItems_userInfoId",
                 table: "TodoItems",
-                column: "user_infoId");
+                column: "userInfoId");
         }
 
         /// <inheritdoc />
@@ -64,7 +65,7 @@ namespace Todolistapplication.Migrations
                 name: "TodoItems");
 
             migrationBuilder.DropTable(
-                name: "user_infos");
+                name: "userInfos");
         }
     }
 }

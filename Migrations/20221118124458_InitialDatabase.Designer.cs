@@ -12,7 +12,7 @@ using Todolistapplication.Models;
 namespace Todolistapplication.Migrations
 {
     [DbContext(typeof(TodolistDbContext))]
-    [Migration("20221116123455_InitialDatabase")]
+    [Migration("20221118124458_InitialDatabase")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -33,32 +33,35 @@ namespace Todolistapplication.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("item_Description")
+                    b.Property<DateTime>("ItemCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ItemDescription")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("item_Name")
+                    b.Property<string>("ItemName")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<DateTime>("item_created")
+                    b.Property<DateTime>("ItemUpdated")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("item_updated")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("status")
+                        .HasColumnType("integer");
 
-                    b.Property<int>("user_infoId")
+                    b.Property<int>("userInfoId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("user_infoId");
+                    b.HasIndex("userInfoId");
 
                     b.ToTable("TodoItems");
                 });
 
-            modelBuilder.Entity("Todolistapplication.Models.user_info", b =>
+            modelBuilder.Entity("Todolistapplication.Models.UserInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,23 +87,18 @@ namespace Todolistapplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("user_infos");
+                    b.ToTable("userInfos");
                 });
 
             modelBuilder.Entity("Todolistapplication.Models.TodoItem", b =>
                 {
-                    b.HasOne("Todolistapplication.Models.user_info", "user_info")
-                        .WithMany("TodoItems")
-                        .HasForeignKey("user_infoId")
+                    b.HasOne("Todolistapplication.Models.UserInfo", "userInfo")
+                        .WithMany()
+                        .HasForeignKey("userInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("user_info");
-                });
-
-            modelBuilder.Entity("Todolistapplication.Models.user_info", b =>
-                {
-                    b.Navigation("TodoItems");
+                    b.Navigation("userInfo");
                 });
 #pragma warning restore 612, 618
         }

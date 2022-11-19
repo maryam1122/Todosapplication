@@ -5,7 +5,14 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Todolistapplication.Models
-{
+{   
+  
+    public enum status
+    {
+         NotStarted, OnGoing, Completed
+    }
+
+
     public class TodoItem
     {
         [Key]
@@ -18,8 +25,9 @@ namespace Todolistapplication.Models
         public string ItemDescription { get; set; }
         public DateTime ItemCreated { get; set; }
         public DateTime ItemUpdated { get; set; }
+        public User user { get; set; }
+        public int UserId { get; set; }
 
-        // Either declare this here or see TodoItem class. Both ways should work
-        public UserInfo userInfo { get; set; }
+        public status status { get; set; }
     }
 }
