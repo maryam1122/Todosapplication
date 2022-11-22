@@ -7,7 +7,5 @@ namespace Todolistapplication.Interface
     {
         Task<User> GetByEmail(string email);
         Task<User> Create (User userInfo);
-
-
     }
 }

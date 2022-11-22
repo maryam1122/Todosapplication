@@ -1,29 +1,47 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Todolistapplication.Interface;
 using Todolistapplication.Models;
 using Microsoft.AspNetCore.Authorization;
+using Npgsql;
 
 namespace Todolistapplication.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private readonly ITodolist _ITodolist;
-        public TodoController(ITodolist ITodolist)
+        private readonly ITodolist _iTodolist;
+        public TodoController(ITodolist todolist)
         {
-            _ITodolist = ITodolist;
+            _iTodolist = todolist;
+        }
+        
+        // Get api/Todolist
+        [HttpGet]
+        public async Task<ActionResult<List<TodoItem>>> Get(Status? status)
+        {
+            if (status.HasValue)
+                return await _iTodolist.GetTodoItemDetailsByStatusAsync(status.Value);
+            
+            return await _iTodolist.GetTodoItemDetailsAsync();
         }
 
-        // POST api/Todolist
+        // POST api/ Create Todolist
         [HttpPost]
-        public async Task<ActionResult<TodoItem>>Post(TodoItem todoItem)
+        public async Task<ActionResult<TodoItem>>Post(TodoItemDto todoItem)
         {
-            _ITodolist.AddTodoItem(todoItem);
-            return await Task.FromResult(todoItem);
+            var todoItems = new TodoItem()
+            {
+                ItemName = todoItem.ItemName,
+                ItemDescription = todoItem.ItemDescription,
+                ItemCreated = DateTime.UtcNow,
+                ItemUpdated = DateTime.UtcNow,
+                UserId = todoItem.UserId,
 
+            }; 
+            _iTodolist.AddTodoItem(todoItems);
+            return await Task.FromResult(todoItems);
         }
 
         // PUT api/Todolist
@@ -36,11 +54,11 @@ namespace Todolistapplication.Controllers
             }
             try
             {
-                _ITodolist.UpdateTodoItem(todoItem);
+                _iTodolist.UpdateTodoItem(todoItem);
             }
             catch
             {
-                throw;
+                throw new NpgsqlException();
             }
             
             return await Task.FromResult(todoItem);
@@ -50,7 +68,7 @@ namespace Todolistapplication.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<TodoItem>> Delete(int id)
         {
-            var todoItem = _ITodolist.DeleteTodoItem(id);
+            var todoItem = _iTodolist.DeleteTodoItem(id);
             return await Task.FromResult(todoItem);
         }
     }

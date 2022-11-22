@@ -1,17 +1,14 @@
-﻿
-using Todolistapplication.Models;
+﻿using Todolistapplication.Models;
 
 namespace Todolistapplication.Interface
 {
     public interface ITodolist
     {
-        public List<TodoItem> GetTodoItemDetails();
-        public TodoItem GetTodoItemDetails(int id);
+        public Task<List<TodoItem>> GetTodoItemDetailsByStatusAsync(Status status);
+        public Task<List<TodoItem>> GetTodoItemDetailsAsync();
+        public Task<TodoItem> GetTodoItemDetailsAsync(int id);
         public void AddTodoItem(TodoItem item);
         public void UpdateTodoItem(TodoItem item);
         public TodoItem DeleteTodoItem(int Id);
-        
-
-
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Xml.Linq;
+using System.Text.Json.Serialization;
 
 namespace Todolistapplication.Models
-{   
-  
-    public enum status
+{
+    public enum Status
     {
-         NotStarted, OnGoing, Completed
+         NotStarted, 
+         OnGoing, 
+         Completed
     }
-
-
+    
     public class TodoItem
     {
         [Key]
@@ -22,12 +20,18 @@ namespace Todolistapplication.Models
         [StringLength(250)]
         [Required]
         public string ItemName { get; set; }
+        
         public string ItemDescription { get; set; }
+        
         public DateTime ItemCreated { get; set; }
+        
         public DateTime ItemUpdated { get; set; }
-        public User user { get; set; }
+        public Status Status { get; set; }
+        [JsonIgnore]
+        public User User { get; set; }
+        
         public int UserId { get; set; }
 
-        public status status { get; set; }
+     
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Todolistapplication.Interface;
 using Todolistapplication.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Todolistapplication.Repository
 {
@@ -10,48 +11,58 @@ namespace Todolistapplication.Repository
         public TodoItemRepository(TodolistDbContext dbContext)
         { _dbContext = dbContext; }
 
-        public List<TodoItem> GetTodoItemDetails()
+        public async Task<List<TodoItem>> GetTodoItemDetailsAsync()
         {
             try
             {
-                return _dbContext.TodoItems.ToList();
+                return await _dbContext?.TodoItems?.ToListAsync();
             }
             catch
             {
-                throw;
-
+                throw new NpgsqlException();
             }
         }
-        public TodoItem GetTodoItemDetails(int id)
+        
+        public async Task<List<TodoItem>> GetTodoItemDetailsByStatusAsync(Status status)
         {
             try
             {
-                TodoItem? todoItem = _dbContext.TodoItems.Find(id);
+                return await _dbContext?.TodoItems?.Where(todo => todo.Status == status).ToListAsync();
+            }
+            catch
+            {
+                throw new NpgsqlException();
+            }
+        }
+        
+        public async Task<TodoItem> GetTodoItemDetailsAsync(int id)
+        {
+            try
+            {
+                TodoItem? todoItem = await _dbContext.TodoItems.FindAsync(id);
                 if (todoItem != null)
                 {
                     return todoItem;
                 }
-                else
-                {
-                    throw new ArgumentNullException();
-                }
+
+                throw new ArgumentNullException();
             }
             catch
             {
-                throw;
+                throw new NpgsqlException();
             }
 
         }
-        public void AddTodoItem(TodoItem item)
+        public async void AddTodoItem(TodoItem item)
         {
             try
-            {
-                _dbContext.TodoItems.Add(item);
-                _dbContext.SaveChanges();
+            {  
+                _dbContext.TodoItems?.Add(item);
+                await _dbContext.SaveChangesAsync();
             }
             catch
             {
-                throw;
+                throw new NpgsqlException();
             }
         }
         public void UpdateTodoItem(TodoItem item)
@@ -63,17 +74,17 @@ namespace Todolistapplication.Repository
             }
             catch
             {
-                throw;
+                throw new NpgsqlException();
             }
         }
         public TodoItem DeleteTodoItem(int Id)
         {
             try
             {
-                TodoItem? todoItem = _dbContext.TodoItems.Find(Id);
+                TodoItem? todoItem = _dbContext.TodoItems?.Find(Id);
                 if (todoItem != null)
                 {
-                    _dbContext.TodoItems.Remove(todoItem);
+                    _dbContext.TodoItems?.Remove(todoItem);
                     _dbContext.SaveChanges();
                     return todoItem;
                 }
@@ -84,7 +95,7 @@ namespace Todolistapplication.Repository
             }
             catch
             {
-                throw;
+                throw new NpgsqlException();
             }
         }
 

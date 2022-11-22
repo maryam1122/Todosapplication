@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Todolistapplication.Models;
@@ -11,9 +12,11 @@ using Todolistapplication.Models;
 namespace Todolistapplication.Migrations
 {
     [DbContext(typeof(TodolistDbContext))]
-    partial class TodolistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120231140_UpdatePasswordHash")]
+    partial class UpdatePasswordHash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,10 +48,8 @@ namespace Todolistapplication.Migrations
                     b.Property<DateTime>("ItemUpdated")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
