@@ -20,5 +20,5 @@ The package reference is available
 <ul>
   <li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/">Microsoft.EntityFrameworkCore.Design</a></li>
   <li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/">Microsoft.EntityFrameworkCore.SqlServer</a></li>
-  <li><a href="https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson/">Microsoft.AspNetCore.Mvc.NewtonsoftJson</a></li>
+  <li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore">Microsoft.EntityFrameworkCore </a></li>
 </ul>
