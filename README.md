@@ -8,7 +8,7 @@ items and one todo item can only belong to a single user.
 
 
 ## Using
-- PostgreSQL![Uploading Capture5.PNG…]()
+- PostgreSQL!
  Server
 - EF Core 6
 - ASP.NET Core Web API
